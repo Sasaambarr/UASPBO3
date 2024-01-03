@@ -13,9 +13,9 @@ class CatatanApp:
         self.entri_cari_tanggal = None
         self.tombol_cari = None
         self.inisialisasi_tombol_cari()
-        self.daftar_folder = []  # Menyimpan daftar folder
-        self.inisialisasi_tombol_tambah_folder()  # Memanggil fungsi untuk menampilkan tombol tambah folder
-        self.daftar_folder = []  # Menyimpan daftar folder
+        self.daftar_folder = []  
+        self.inisialisasi_tombol_tambah_folder()  
+        self.daftar_folder = []  
         
 
         # Membuat frame untuk tombol tambah folder
@@ -317,11 +317,9 @@ class CatatanApp:
             self.cursor.execute(query, (f"%{tanggal_cari}%",))
             hasil_query = self.cursor.fetchall()
 
-            # Bersihkan tree sebelum menampilkan hasil pencarian
             for item in self.tree.get_children():
                 self.tree.delete(item)
 
-            # Tampilkan hasil pencarian
             for catatan in hasil_query:
                 self.tree.insert("", "end", values=catatan)
 
@@ -355,14 +353,11 @@ class CatatanApp:
         tombol_simpan_folder.pack(side=tk.LEFT, padx=5, pady=10)
 
     def simpan_folder(self, nama_folder):
-            # Simpan folder baru ke dalam daftar
             self.daftar_folder.append(nama_folder)
-
-            # Setelah menyimpan folder baru, perbarui daftar folder yang ditampilkan
-            self.tampilkan_daftar_folder()
+              self.tampilkan_daftar_folder()
            
             if nama_folder:
-                # Memastikan folder belum ada sebelumnya
+            
                 if nama_folder not in self.daftar_folder:
                     self.daftar_folder.append(nama_folder)
                     messagebox.showinfo("Info", f"Folder '{nama_folder}' berhasil ditambahkan.")
@@ -372,24 +367,19 @@ class CatatanApp:
 
     def tampilkan_daftar_folder(self):
         if hasattr(self, 'frame_daftar_folder'):
-            self.frame_daftar_folder.destroy()  # Hapus frame daftar folder jika sudah ada sebelumnya
+            self.frame_daftar_folder.destroy() 
 
-        # Membuat frame baru untuk daftar folder
         self.frame_daftar_folder = tk.Frame(self.root, bg="#FFB6C1")
         self.frame_daftar_folder.pack()
 
-        # Membuat label untuk judul daftar folder
         label_daftar_folder = tk.Label(self.frame_daftar_folder, text="Daftar Folder:", bg="#FFB6C1", fg="black")
         label_daftar_folder.pack()
 
-        # Membuat Listbox untuk menampilkan daftar folder
         self.listbox_daftar_folder = tk.Listbox(self.frame_daftar_folder, bg="#FFFFFF", fg="black", width=30, height=10)
         self.listbox_daftar_folder.pack(padx=10, pady=10)
 
-        # Hapus semua item di Listbox sebelum menampilkan daftar folder yang baru
         self.listbox_daftar_folder.delete(0, tk.END)
 
-        # Menampilkan nama-nama folder di Listbox
         for folder in self.daftar_folder:
             self.listbox_daftar_folder.insert(tk.END, folder)
         
